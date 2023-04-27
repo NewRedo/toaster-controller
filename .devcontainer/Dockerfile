@@ -26,12 +26,14 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     curl \
     git \
     gnupg \
+    make \
     openssh-client \
   && groupadd --gid ${USER_GID} ${USER_NAME} \
   && useradd -s /bin/bash --uid ${USER_UID} --gid ${USER_GID} -m ${USER_NAME} \
   # kubectl
   && curl -sSL -o /tmp/kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl \
   && bash -c "echo \${KUBECTL_SHASUM_${ARCH}}  /tmp/kubectl" | sha256sum -c - \
+  && chmod +x /tmp/kubectl \
   && mv /tmp/kubectl /usr/local/bin/kubectl \
   # Go
   && curl -sSL -o /tmp/go.tar.gz https://golang.org/dl/go${GO_VERSION}.linux-${ARCH}.tar.gz \
@@ -46,13 +48,12 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" > /etc/apt/sources.list.d/docker.list \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
-    #docker-ce \
+    docker-ce \
     docker-ce-cli \
-    #containerd.io \
     docker-buildx-plugin \
     docker-compose-plugin \
+  && usermod -a -G docker ${USER_NAME} \
   # Operator SDK
-  && echo ${OPERATOR_SDK_DL_URL} \
   && curl -fsSL -o /tmp/operator-sdk ${OPERATOR_SDK_DL_URL}/${OPERATOR_SDK_VERSION}/operator-sdk_linux_${ARCH} \
   && bash -c "echo \${OPERATOR_SDK_SHASUM_${ARCH}}  /tmp/operator-sdk" | sha256sum -c - \
   && chmod +x /tmp/operator-sdk \
