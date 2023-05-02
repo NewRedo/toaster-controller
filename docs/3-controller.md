@@ -6,6 +6,7 @@ We will now create our ToastController to manage the Toast resources.
 # Steps
 
 1. Update the `ToastReconciler.Reconcile()` function to implement the Toaster update loop.
+  Find and open the `breakfast/internal/controller/toast_controller.go` file.
 
   First, we define a constant to represent how long to wait between updates:
   ```go
@@ -81,6 +82,8 @@ We will now create our ToastController to manage the Toast resources.
 2. Build with `make docker-build TAG=breakfast:latest`
 
 3. If using a local kubernetes deployment, prevent kubernetes from pulling the image from a remote repository:
+
+  In `breakfast/config/manager/manager.yaml`:
   ```diff
             args:
               - --leader-elect
