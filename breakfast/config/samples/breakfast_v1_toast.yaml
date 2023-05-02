@@ -1,0 +1,12 @@
+apiVersion: breakfast.newredo.com/v1
+kind: Toast
+metadata:
+  labels:
+    app.kubernetes.io/name: toast
+    app.kubernetes.io/instance: toast-sample
+    app.kubernetes.io/part-of: breakfast
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: breakfast
+  name: toast-sample
+spec:
+  # TODO(user): Add fields here

@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- breakfast_v1_toast.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
